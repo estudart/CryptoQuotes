@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crypto API</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        min-height: 100vh;
+        margin: 0;
+        background: linear-gradient(to bottom, #0f0f0f, #eefd13fd);
+        color: #c7bdbd;
+      }
+    </style>
+  </head>
+  <body
+    class="d-flex align-items-center justify-content-center py-4 bg-body-tertiary"
+  >
+    <main class="form m-auto">
+      <div class="d-flex flex-column align-items-center justify-content-center">
+        <img src="Crypto.webp" alt="BTC Image" width="10%" />
+        <h1 class="py-1">Crypto Quotes</h1>
+      </div>
+      <% if (locals.symbols) { %>
+      <form action="/get_data" id="form" class="form m-auto" method="GET">
+        <div class="d-flex align-items-center justify-content-center">
+          <select name="crypto" id="myDropdown" class="form">
+            <% if (locals.lastchosen) { %>
+            <option value=""><%= lastchosen %></option>
+            <% } %> <% for(var i = 0; i < symbols.length; i++) { %>
+            <option value="<%= symbols[i] %>"><%= symbols[i] %></option>
+            <% } %>
+          </select>
+          <button
+            type="submit"
+            class="btn btn-secondary btn-sm m-3"
+            style="margin-right: 0"
+          >
+            Get Data
+          </button>
+        </div>
+        <div
+          class="d-flex flex-column align-items-center justify-content-center"
+        >
+          <% } %> <% if (locals.data) { %>
+          <ul class="list-group py-4" style="width: 12%">
+            <li class="list-group-item">
+              price: <%= Math.round(data.price_24h * 100) / 100 %> $
+            </li>
+            <li class="list-group-item">
+              volume: <%= Math.round(data.volume_24h * 100) / 100 %>
+            </li>
+          </ul>
+        </div>
+        <% } %>
+      </form>
+    </main>
+  </body>
+</html>
